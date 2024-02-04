@@ -2,7 +2,7 @@ import { sendTransactions, } from "../../actions/smartAccount.js";
 import { deployContract, } from "../../actions/smartAccount/deployContract.js";
 import { prepareUserOperationRequest, } from "../../actions/smartAccount/prepareUserOperationRequest.js";
 import { sendTransaction, } from "../../actions/smartAccount/sendTransaction.js";
-import { sendUserOperation, } from "../../actions/smartAccount/sendUserOperation.js";
+import { sendUserOperation, getUserOperationWithoutSignature, } from "../../actions/smartAccount/sendUserOperation.js";
 import { signMessage } from "../../actions/smartAccount/signMessage.js";
 import { signTypedData } from "../../actions/smartAccount/signTypedData.js";
 import { writeContract, } from "../../actions/smartAccount/writeContract.js";
@@ -28,6 +28,7 @@ export function smartAccountActions({ sponsorUserOperation, }) {
             ...args,
             sponsorUserOperation,
         }),
+        getUserOperationWithoutSignature: (args) => getUserOperationWithoutSignature(client, args),
         signMessage: (args) => signMessage(client, args),
         signTypedData: (args) => signTypedData(client, args),
         writeContract: (args) => writeContract(client, {

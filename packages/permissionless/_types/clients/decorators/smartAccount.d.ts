@@ -4,7 +4,7 @@ import { type SendTransactionsWithPaymasterParameters, sendTransactions } from "
 import { deployContract } from "../../actions/smartAccount/deployContract";
 import { type PrepareUserOperationRequestReturnType, type SponsorUserOperationMiddleware, prepareUserOperationRequest } from "../../actions/smartAccount/prepareUserOperationRequest";
 import { sendTransaction } from "../../actions/smartAccount/sendTransaction";
-import { sendUserOperation } from "../../actions/smartAccount/sendUserOperation";
+import { type SendUserOperationParameters, sendUserOperation, getUserOperationWithoutSignature } from "../../actions/smartAccount/sendUserOperation";
 import { signMessage } from "../../actions/smartAccount/signMessage";
 import { signTypedData } from "../../actions/smartAccount/signTypedData";
 import { writeContract } from "../../actions/smartAccount/writeContract";
@@ -276,6 +276,7 @@ export type SmartAccountActions<TChain extends Chain | undefined = Chain | undef
     writeContract: <const TAbi extends Abi | readonly unknown[], TFunctionName extends ContractFunctionName<TAbi, "nonpayable" | "payable"> = ContractFunctionName<TAbi, "nonpayable" | "payable">, TArgs extends ContractFunctionArgs<TAbi, "nonpayable" | "payable", TFunctionName> = ContractFunctionArgs<TAbi, "nonpayable" | "payable", TFunctionName>, TChainOverride extends Chain | undefined = undefined>(args: WriteContractParameters<TAbi, TFunctionName, TArgs, TChain, TSmartAccount, TChainOverride>) => ReturnType<typeof writeContract<TChain, TSmartAccount, TAbi, TFunctionName, TArgs, TChainOverride>>;
     prepareUserOperationRequest: <TTransport extends Transport>(args: Prettify<Parameters<typeof prepareUserOperationRequest<TTransport, TChain, TSmartAccount>>[1]>, stateOverrides?: StateOverrides) => Promise<Prettify<PrepareUserOperationRequestReturnType>>;
     sendUserOperation: <TTransport extends Transport>(args: Prettify<Parameters<typeof sendUserOperation<TTransport, TChain, TSmartAccount>>[1]>) => Promise<Hash>;
+    getUserOperationWithoutSignature: <TTransport extends Transport>(args: Prettify<SendUserOperationParameters<TSmartAccount>>) => ReturnType<typeof getUserOperationWithoutSignature<TTransport, TChain, TSmartAccount>>;
     /**
      * Creates, signs, and sends a new transaction to the network.
      * This function also allows you to sponsor this transaction if sender is a smartAccount

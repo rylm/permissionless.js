@@ -32,6 +32,7 @@ import {
 import {
   type SendUserOperationParameters,
   sendUserOperation,
+  getUserOperationWithoutSignature,
 } from "../../actions/smartAccount/sendUserOperation";
 import { signMessage } from "../../actions/smartAccount/signMessage";
 import { signTypedData } from "../../actions/smartAccount/signTypedData";
@@ -372,6 +373,11 @@ export type SmartAccountActions<
       Parameters<typeof sendUserOperation<TTransport, TChain, TSmartAccount>>[1]
     >
   ) => Promise<Hash>;
+  getUserOperationWithoutSignature: <TTransport extends Transport>(
+    args: Prettify<SendUserOperationParameters<TSmartAccount>>
+  ) => ReturnType<
+    typeof getUserOperationWithoutSignature<TTransport, TChain, TSmartAccount>
+  >;
   /**
    * Creates, signs, and sends a new transaction to the network.
    * This function also allows you to sponsor this transaction if sender is a smartAccount
@@ -465,6 +471,8 @@ export function smartAccountActions({
         ...args,
         sponsorUserOperation,
       } as SendUserOperationParameters<TSmartAccount>),
+    getUserOperationWithoutSignature: (args) =>
+      getUserOperationWithoutSignature(client, args),
     signMessage: (args) => signMessage(client, args),
     signTypedData: (args) => signTypedData(client, args),
     writeContract: (args) =>
