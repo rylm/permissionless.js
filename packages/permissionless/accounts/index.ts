@@ -35,7 +35,8 @@ import {
 
 import {
     type PrivateKeyToBiconomySmartAccountParameters,
-    privateKeyToBiconomySmartAccount
+    privateKeyToBiconomySmartAccount,
+    testFunction
 } from "./biconomy/privateKeyToBiconomySmartAccount"
 
 import {
@@ -53,6 +54,7 @@ export {
     signerToSimpleSmartAccount,
     SignTransactionNotSupportedBySmartAccount,
     privateKeyToBiconomySmartAccount,
+    testFunction,
     privateKeyToSimpleSmartAccount,
     type SmartAccount,
     privateKeyToSafeSmartAccount,
