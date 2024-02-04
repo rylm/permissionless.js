@@ -472,7 +472,10 @@ export function smartAccountActions({
         sponsorUserOperation,
       } as SendUserOperationParameters<TSmartAccount>),
     getUserOperationWithoutSignature: (args) =>
-      getUserOperationWithoutSignature(client, args),
+      getUserOperationWithoutSignature(client, {
+        ...args,
+        sponsorUserOperation,
+      } as SendUserOperationParameters<TSmartAccount>),
     signMessage: (args) => signMessage(client, args),
     signTypedData: (args) => signTypedData(client, args),
     writeContract: (args) =>

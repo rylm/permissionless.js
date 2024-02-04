@@ -31,7 +31,10 @@ function smartAccountActions({ sponsorUserOperation, }) {
             ...args,
             sponsorUserOperation,
         }),
-        getUserOperationWithoutSignature: (args) => (0, sendUserOperation_1.getUserOperationWithoutSignature)(client, args),
+        getUserOperationWithoutSignature: (args) => (0, sendUserOperation_1.getUserOperationWithoutSignature)(client, {
+            ...args,
+            sponsorUserOperation,
+        }),
         signMessage: (args) => (0, signMessage_1.signMessage)(client, args),
         signTypedData: (args) => (0, signTypedData_1.signTypedData)(client, args),
         writeContract: (args) => (0, writeContract_1.writeContract)(client, {

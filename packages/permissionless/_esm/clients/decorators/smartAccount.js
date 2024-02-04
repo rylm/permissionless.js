@@ -28,7 +28,10 @@ export function smartAccountActions({ sponsorUserOperation, }) {
             ...args,
             sponsorUserOperation,
         }),
-        getUserOperationWithoutSignature: (args) => getUserOperationWithoutSignature(client, args),
+        getUserOperationWithoutSignature: (args) => getUserOperationWithoutSignature(client, {
+            ...args,
+            sponsorUserOperation,
+        }),
         signMessage: (args) => signMessage(client, args),
         signTypedData: (args) => signTypedData(client, args),
         writeContract: (args) => writeContract(client, {
