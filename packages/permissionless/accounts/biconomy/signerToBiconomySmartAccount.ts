@@ -229,14 +229,7 @@ export async function signerToBiconomySmartAccount<
   _pubKeyX: bigint,
   _pubKeyY: bigint,
   _keyId: string
-): Promise<
-  Omit<BiconomySmartAccount<TTransport, TChain>, "signUserOperation"> & {
-    getSignatureWithModuleAddress: (
-      signature: `0x${string}`
-    ) => Promise<Hex>;
-    getUserOpHash: (userOperation: UserOperation) => Promise<Hex>;
-  }
-> {
+): Promise<BiconomySmartAccount<TTransport, TChain>> {
   // Helper to generate the init code for the smart account
   const generateInitCode = (
     _pubKeyX: bigint,
@@ -278,7 +271,7 @@ export async function signerToBiconomySmartAccount<
   // Build the EOA Signer
   const account = toAccount({
     address: accountAddress,
-    async signMessage({ }) {
+    async signMessage({}) {
       throw new Error("Not implemented");
     },
     async signTransaction(_, __) {

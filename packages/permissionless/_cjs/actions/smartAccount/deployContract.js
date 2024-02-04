@@ -11,7 +11,7 @@ async function deployContract(client, args) {
     const { account: account_ = client.account } = request;
     if (!account_) {
         throw new signUserOperationHashWithECDSA_1.AccountOrClientNotFoundError({
-            docsPath: "/docs/actions/wallet/sendTransaction"
+            docsPath: "/docs/actions/wallet/sendTransaction",
         });
     }
     const account = (0, utils_1.parseAccount)(account_);
@@ -24,14 +24,15 @@ async function deployContract(client, args) {
             callData: await account.encodeDeployCallData({
                 abi,
                 bytecode,
-                args: constructorArgs
-            })
+                args: constructorArgs,
+            }),
         },
+        signature: "0x",
         account: account,
-        sponsorUserOperation
+        sponsorUserOperation,
     });
     const userOperationReceipt = await (0, getAction_1.getAction)(client, waitForUserOperationReceipt_1.waitForUserOperationReceipt)({
-        hash: userOpHash
+        hash: userOpHash,
     });
     return userOperationReceipt?.receipt.transactionHash;
 }

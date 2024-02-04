@@ -1,39 +1,39 @@
-import { sendTransactions } from "../../actions/smartAccount.js";
-import { deployContract } from "../../actions/smartAccount/deployContract.js";
-import { prepareUserOperationRequest } from "../../actions/smartAccount/prepareUserOperationRequest.js";
-import { sendTransaction } from "../../actions/smartAccount/sendTransaction.js";
-import { sendUserOperation } from "../../actions/smartAccount/sendUserOperation.js";
+import { sendTransactions, } from "../../actions/smartAccount.js";
+import { deployContract, } from "../../actions/smartAccount/deployContract.js";
+import { prepareUserOperationRequest, } from "../../actions/smartAccount/prepareUserOperationRequest.js";
+import { sendTransaction, } from "../../actions/smartAccount/sendTransaction.js";
+import { sendUserOperation, } from "../../actions/smartAccount/sendUserOperation.js";
 import { signMessage } from "../../actions/smartAccount/signMessage.js";
 import { signTypedData } from "../../actions/smartAccount/signTypedData.js";
-import { writeContract } from "../../actions/smartAccount/writeContract.js";
-export function smartAccountActions({ sponsorUserOperation }) {
+import { writeContract, } from "../../actions/smartAccount/writeContract.js";
+export function smartAccountActions({ sponsorUserOperation, }) {
     return (client) => ({
         prepareUserOperationRequest: (args, stateOverrides) => prepareUserOperationRequest(client, {
             ...args,
-            sponsorUserOperation
+            sponsorUserOperation,
         }, stateOverrides),
         deployContract: (args) => deployContract(client, {
             ...args,
-            sponsorUserOperation
+            sponsorUserOperation,
         }),
         sendTransaction: (args) => sendTransaction(client, {
             ...args,
-            sponsorUserOperation
+            sponsorUserOperation,
         }),
         sendTransactions: (args) => sendTransactions(client, {
             ...args,
-            sponsorUserOperation
+            sponsorUserOperation,
         }),
         sendUserOperation: (args) => sendUserOperation(client, {
             ...args,
-            sponsorUserOperation
+            sponsorUserOperation,
         }),
         signMessage: (args) => signMessage(client, args),
         signTypedData: (args) => signTypedData(client, args),
         writeContract: (args) => writeContract(client, {
             ...args,
-            sponsorUserOperation
-        })
+            sponsorUserOperation,
+        }),
     });
 }
 //# sourceMappingURL=smartAccount.js.map

@@ -51,10 +51,10 @@ import { sendUserOperation } from "./sendUserOperation.js";
  * }])
  */
 export async function sendTransactions(client, args) {
-    const { account: account_ = client.account, transactions, sponsorUserOperation, maxFeePerGas, maxPriorityFeePerGas, nonce } = args;
+    const { account: account_ = client.account, transactions, sponsorUserOperation, maxFeePerGas, maxPriorityFeePerGas, nonce, } = args;
     if (!account_) {
         throw new AccountOrClientNotFoundError({
-            docsPath: "/docs/actions/wallet/sendTransaction"
+            docsPath: "/docs/actions/wallet/sendTransaction",
         });
     }
     const account = parseAccount(account_);
@@ -67,7 +67,7 @@ export async function sendTransactions(client, args) {
         return {
             to,
             value: value || 0n,
-            data: data || "0x"
+            data: data || "0x",
         };
     }));
     const userOpHash = await getAction(client, sendUserOperation)({
@@ -77,13 +77,14 @@ export async function sendTransactions(client, args) {
             maxFeePerGas: maxFeePerGas || 0n,
             maxPriorityFeePerGas: maxPriorityFeePerGas || 0n,
             callData: callData,
-            nonce: nonce
+            nonce: nonce,
         },
         account: account,
-        sponsorUserOperation
+        signature: "0x",
+        sponsorUserOperation,
     });
     const userOperationReceipt = await getAction(client, waitForUserOperationReceipt)({
-        hash: userOpHash
+        hash: userOpHash,
     });
     return userOperationReceipt?.receipt.transactionHash;
 }

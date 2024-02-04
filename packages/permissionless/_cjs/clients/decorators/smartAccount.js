@@ -9,34 +9,34 @@ const sendUserOperation_1 = require("../../actions/smartAccount/sendUserOperatio
 const signMessage_1 = require("../../actions/smartAccount/signMessage.js");
 const signTypedData_1 = require("../../actions/smartAccount/signTypedData.js");
 const writeContract_1 = require("../../actions/smartAccount/writeContract.js");
-function smartAccountActions({ sponsorUserOperation }) {
+function smartAccountActions({ sponsorUserOperation, }) {
     return (client) => ({
         prepareUserOperationRequest: (args, stateOverrides) => (0, prepareUserOperationRequest_1.prepareUserOperationRequest)(client, {
             ...args,
-            sponsorUserOperation
+            sponsorUserOperation,
         }, stateOverrides),
         deployContract: (args) => (0, deployContract_1.deployContract)(client, {
             ...args,
-            sponsorUserOperation
+            sponsorUserOperation,
         }),
         sendTransaction: (args) => (0, sendTransaction_1.sendTransaction)(client, {
             ...args,
-            sponsorUserOperation
+            sponsorUserOperation,
         }),
         sendTransactions: (args) => (0, smartAccount_1.sendTransactions)(client, {
             ...args,
-            sponsorUserOperation
+            sponsorUserOperation,
         }),
         sendUserOperation: (args) => (0, sendUserOperation_1.sendUserOperation)(client, {
             ...args,
-            sponsorUserOperation
+            sponsorUserOperation,
         }),
         signMessage: (args) => (0, signMessage_1.signMessage)(client, args),
         signTypedData: (args) => (0, signTypedData_1.signTypedData)(client, args),
         writeContract: (args) => (0, writeContract_1.writeContract)(client, {
             ...args,
-            sponsorUserOperation
-        })
+            sponsorUserOperation,
+        }),
     });
 }
 exports.smartAccountActions = smartAccountActions;

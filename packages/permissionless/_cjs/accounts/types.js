@@ -6,10 +6,10 @@ class SignTransactionNotSupportedBySmartAccount extends viem_1.BaseError {
     constructor({ docsPath } = {}) {
         super([
             "A smart account cannot sign or send transaction, it can only sign message or userOperation.",
-            "Please send user operation instead."
+            "Please send user operation instead.",
         ].join("\n"), {
             docsPath,
-            docsSlug: "account"
+            docsSlug: "account",
         });
         Object.defineProperty(this, "name", {
             enumerable: true,

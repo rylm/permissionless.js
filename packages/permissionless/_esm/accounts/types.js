@@ -1,13 +1,13 @@
-import { BaseError } from "viem";
+import { BaseError, } from "viem";
 import {} from "../types/index.js";
 export class SignTransactionNotSupportedBySmartAccount extends BaseError {
     constructor({ docsPath } = {}) {
         super([
             "A smart account cannot sign or send transaction, it can only sign message or userOperation.",
-            "Please send user operation instead."
+            "Please send user operation instead.",
         ].join("\n"), {
             docsPath,
-            docsSlug: "account"
+            docsSlug: "account",
         });
         Object.defineProperty(this, "name", {
             enumerable: true,

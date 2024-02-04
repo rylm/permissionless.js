@@ -1,16 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signerToBiconomySmartAccount = exports.signerToEcdsaKernelSmartAccount = exports.privateKeyToSafeSmartAccount = exports.privateKeyToSimpleSmartAccount = exports.privateKeyToBiconomySmartAccount = exports.SignTransactionNotSupportedBySmartAccount = exports.signerToSimpleSmartAccount = exports.signerToSafeSmartAccount = void 0;
-const privateKeyToSimpleSmartAccount_1 = require("./simple/privateKeyToSimpleSmartAccount.js");
-Object.defineProperty(exports, "privateKeyToSimpleSmartAccount", { enumerable: true, get: function () { return privateKeyToSimpleSmartAccount_1.privateKeyToSimpleSmartAccount; } });
-const signerToSimpleSmartAccount_1 = require("./simple/signerToSimpleSmartAccount.js");
-Object.defineProperty(exports, "signerToSimpleSmartAccount", { enumerable: true, get: function () { return signerToSimpleSmartAccount_1.signerToSimpleSmartAccount; } });
-const privateKeyToSafeSmartAccount_1 = require("./safe/privateKeyToSafeSmartAccount.js");
-Object.defineProperty(exports, "privateKeyToSafeSmartAccount", { enumerable: true, get: function () { return privateKeyToSafeSmartAccount_1.privateKeyToSafeSmartAccount; } });
-const signerToSafeSmartAccount_1 = require("./safe/signerToSafeSmartAccount.js");
-Object.defineProperty(exports, "signerToSafeSmartAccount", { enumerable: true, get: function () { return signerToSafeSmartAccount_1.signerToSafeSmartAccount; } });
-const signerToEcdsaKernelSmartAccount_1 = require("./kernel/signerToEcdsaKernelSmartAccount.js");
-Object.defineProperty(exports, "signerToEcdsaKernelSmartAccount", { enumerable: true, get: function () { return signerToEcdsaKernelSmartAccount_1.signerToEcdsaKernelSmartAccount; } });
+exports.signerToBiconomySmartAccount = exports.privateKeyToBiconomySmartAccount = exports.SignTransactionNotSupportedBySmartAccount = void 0;
 const signerToBiconomySmartAccount_1 = require("./biconomy/signerToBiconomySmartAccount.js");
 Object.defineProperty(exports, "signerToBiconomySmartAccount", { enumerable: true, get: function () { return signerToBiconomySmartAccount_1.signerToBiconomySmartAccount; } });
 const privateKeyToBiconomySmartAccount_1 = require("./biconomy/privateKeyToBiconomySmartAccount.js");

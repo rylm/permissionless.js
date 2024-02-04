@@ -6,10 +6,10 @@ const getAction_1 = require("../../utils/getAction.js");
 const waitForUserOperationReceipt_1 = require("../bundler/waitForUserOperationReceipt.js");
 const sendUserOperation_1 = require("./sendUserOperation.js");
 async function sendTransaction(client, args) {
-    const { account: account_ = client.account, data, maxFeePerGas, maxPriorityFeePerGas, to, value, nonce, sponsorUserOperation } = args;
+    const { account: account_ = client.account, data, maxFeePerGas, maxPriorityFeePerGas, to, value, nonce, sponsorUserOperation, } = args;
     if (!account_) {
         throw new utils_1.AccountOrClientNotFoundError({
-            docsPath: "/docs/actions/wallet/sendTransaction"
+            docsPath: "/docs/actions/wallet/sendTransaction",
         });
     }
     const account = (0, utils_1.parseAccount)(account_);
@@ -21,7 +21,7 @@ async function sendTransaction(client, args) {
     const callData = await account.encodeCallData({
         to,
         value: value || 0n,
-        data: data || "0x"
+        data: data || "0x",
     });
     const userOpHash = await (0, getAction_1.getAction)(client, sendUserOperation_1.sendUserOperation)({
         userOperation: {
@@ -30,13 +30,14 @@ async function sendTransaction(client, args) {
             maxFeePerGas: maxFeePerGas || 0n,
             maxPriorityFeePerGas: maxPriorityFeePerGas || 0n,
             callData: callData,
-            nonce: nonce ? BigInt(nonce) : undefined
+            nonce: nonce ? BigInt(nonce) : undefined,
         },
         account: account,
-        sponsorUserOperation
+        signature: "0x",
+        sponsorUserOperation,
     });
     const userOperationReceipt = await (0, getAction_1.getAction)(client, waitForUserOperationReceipt_1.waitForUserOperationReceipt)({
-        hash: userOpHash
+        hash: userOpHash,
     });
     return userOperationReceipt?.receipt.transactionHash;
 }

@@ -327,5 +327,5 @@ export type SmartAccountActions<TChain extends Chain | undefined = Chain | undef
      */
     sendTransactions: (args: Prettify<SendTransactionsWithPaymasterParameters<TSmartAccount>>) => ReturnType<typeof sendTransactions<TChain, TSmartAccount>>;
 };
-export declare function smartAccountActions({ sponsorUserOperation }: SponsorUserOperationMiddleware): <TTransport extends Transport, TChain extends Chain | undefined = Chain | undefined, TSmartAccount extends SmartAccount | undefined = SmartAccount | undefined>(client: Client<TTransport, TChain, TSmartAccount>) => SmartAccountActions<TChain, TSmartAccount>;
+export declare function smartAccountActions({ sponsorUserOperation, }: SponsorUserOperationMiddleware): <TTransport extends Transport, TChain extends Chain | undefined = Chain | undefined, TSmartAccount extends SmartAccount | undefined = SmartAccount | undefined>(client: Client<TTransport, TChain, TSmartAccount>) => SmartAccountActions<TChain, TSmartAccount>;
 //# sourceMappingURL=smartAccount.d.ts.map

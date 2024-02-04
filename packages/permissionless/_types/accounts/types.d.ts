@@ -22,8 +22,9 @@ export type SmartAccount<Name extends string = string, transport extends Transpo
         data: Hex;
     }[]) => Promise<Hex>;
     getDummySignature(userOperation: UserOperation): Promise<Hex>;
-    encodeDeployCallData: ({ abi, args, bytecode }: EncodeDeployDataParameters<TAbi>) => Promise<Hex>;
-    signUserOperation: (userOperation: UserOperation) => Promise<Hex>;
+    encodeDeployCallData: ({ abi, args, bytecode, }: EncodeDeployDataParameters<TAbi>) => Promise<Hex>;
+    getSignatureWithModuleAddress: (signature: `0x${string}`) => Promise<Hex>;
+    getUserOpHash: (userOperation: UserOperation) => Promise<Hex>;
 };
 export type SmartAccountSigner<TSource extends string = string, TAddress extends Address = Address> = Omit<LocalAccount<TSource, TAddress>, "signTransaction">;
 //# sourceMappingURL=types.d.ts.map

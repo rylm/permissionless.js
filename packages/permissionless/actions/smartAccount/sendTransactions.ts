@@ -1,30 +1,30 @@
 import type {
-    Address,
-    Chain,
-    Client,
-    Hash,
-    Hex,
-    SendTransactionParameters,
-    Transport
-} from "viem"
-import { type SmartAccount } from "../../accounts/types"
-import type { GetAccountParameter, Prettify } from "../../types/"
-import { AccountOrClientNotFoundError, parseAccount } from "../../utils/"
-import { getAction } from "../../utils/getAction"
-import { waitForUserOperationReceipt } from "../bundler/waitForUserOperationReceipt"
-import { type SponsorUserOperationMiddleware } from "./prepareUserOperationRequest"
-import { sendUserOperation } from "./sendUserOperation"
+  Address,
+  Chain,
+  Client,
+  Hash,
+  Hex,
+  SendTransactionParameters,
+  Transport,
+} from "viem";
+import { type SmartAccount } from "../../accounts/types";
+import type { GetAccountParameter, Prettify } from "../../types/";
+import { AccountOrClientNotFoundError, parseAccount } from "../../utils/";
+import { getAction } from "../../utils/getAction";
+import { waitForUserOperationReceipt } from "../bundler/waitForUserOperationReceipt";
+import { type SponsorUserOperationMiddleware } from "./prepareUserOperationRequest";
+import { sendUserOperation } from "./sendUserOperation";
 
 export type SendTransactionsWithPaymasterParameters<
-    TAccount extends SmartAccount | undefined = SmartAccount | undefined
+  TAccount extends SmartAccount | undefined = SmartAccount | undefined
 > = {
-    transactions: { to: Address; value: bigint; data: Hex }[]
+  transactions: { to: Address; value: bigint; data: Hex }[];
 } & GetAccountParameter<TAccount> &
-    SponsorUserOperationMiddleware & {
-        maxFeePerGas?: bigint
-        maxPriorityFeePerGas?: bigint
-        nonce?: bigint
-    }
+  SponsorUserOperationMiddleware & {
+    maxFeePerGas?: bigint;
+    maxPriorityFeePerGas?: bigint;
+    nonce?: bigint;
+  };
 
 /**
  * Creates, signs, and sends a new transactions to the network.
@@ -73,66 +73,67 @@ export type SendTransactionsWithPaymasterParameters<
  * }])
  */
 export async function sendTransactions<
-    TChain extends Chain | undefined,
-    TAccount extends SmartAccount | undefined
+  TChain extends Chain | undefined,
+  TAccount extends SmartAccount | undefined
 >(
-    client: Client<Transport, TChain, TAccount>,
-    args: Prettify<SendTransactionsWithPaymasterParameters<TAccount>>
+  client: Client<Transport, TChain, TAccount>,
+  args: Prettify<SendTransactionsWithPaymasterParameters<TAccount>>
 ): Promise<Hash> {
-    const {
-        account: account_ = client.account,
-        transactions,
-        sponsorUserOperation,
-        maxFeePerGas,
-        maxPriorityFeePerGas,
-        nonce
-    } = args
+  const {
+    account: account_ = client.account,
+    transactions,
+    sponsorUserOperation,
+    maxFeePerGas,
+    maxPriorityFeePerGas,
+    nonce,
+  } = args;
 
-    if (!account_) {
-        throw new AccountOrClientNotFoundError({
-            docsPath: "/docs/actions/wallet/sendTransaction"
-        })
-    }
+  if (!account_) {
+    throw new AccountOrClientNotFoundError({
+      docsPath: "/docs/actions/wallet/sendTransaction",
+    });
+  }
 
-    const account = parseAccount(account_) as SmartAccount
+  const account = parseAccount(account_) as SmartAccount;
 
-    if (account.type !== "local") {
-        throw new Error("RPC account type not supported")
-    }
+  if (account.type !== "local") {
+    throw new Error("RPC account type not supported");
+  }
 
-    const callData = await account.encodeCallData(
-        transactions.map(({ to, value, data }) => {
-            if (!to) throw new Error("Missing to address")
-            return {
-                to,
-                value: value || 0n,
-                data: data || "0x"
-            }
-        })
-    )
-
-    const userOpHash = await getAction(
-        client,
-        sendUserOperation
-    )({
-        userOperation: {
-            sender: account.address,
-            paymasterAndData: "0x",
-            maxFeePerGas: maxFeePerGas || 0n,
-            maxPriorityFeePerGas: maxPriorityFeePerGas || 0n,
-            callData: callData,
-            nonce: nonce
-        },
-        account: account,
-        sponsorUserOperation
+  const callData = await account.encodeCallData(
+    transactions.map(({ to, value, data }) => {
+      if (!to) throw new Error("Missing to address");
+      return {
+        to,
+        value: value || 0n,
+        data: data || "0x",
+      };
     })
+  );
 
-    const userOperationReceipt = await getAction(
-        client,
-        waitForUserOperationReceipt
-    )({
-        hash: userOpHash
-    })
+  const userOpHash = await getAction(
+    client,
+    sendUserOperation
+  )({
+    userOperation: {
+      sender: account.address,
+      paymasterAndData: "0x",
+      maxFeePerGas: maxFeePerGas || 0n,
+      maxPriorityFeePerGas: maxPriorityFeePerGas || 0n,
+      callData: callData,
+      nonce: nonce,
+    },
+    account: account,
+    signature: "0x",
+    sponsorUserOperation,
+  });
 
-    return userOperationReceipt?.receipt.transactionHash
+  const userOperationReceipt = await getAction(
+    client,
+    waitForUserOperationReceipt
+  )({
+    hash: userOpHash,
+  });
+
+  return userOperationReceipt?.receipt.transactionHash;
 }

@@ -1,6 +1,3 @@
-_cjs
-_esm
-_types
 *.local
 .DS_Store
 .eslintcache

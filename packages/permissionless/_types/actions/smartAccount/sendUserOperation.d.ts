@@ -4,6 +4,9 @@ import type { GetAccountParameter, PartialBy, Prettify, UserOperation } from "..
 import { type SponsorUserOperationMiddleware } from "./prepareUserOperationRequest";
 export type SendUserOperationParameters<TAccount extends SmartAccount | undefined = SmartAccount | undefined> = {
     userOperation: PartialBy<UserOperation, "nonce" | "sender" | "initCode" | "signature" | "callGasLimit" | "maxFeePerGas" | "maxPriorityFeePerGas" | "preVerificationGas" | "verificationGasLimit" | "paymasterAndData">;
-} & GetAccountParameter<TAccount> & SponsorUserOperationMiddleware;
+} & GetAccountParameter<TAccount> & SponsorUserOperationMiddleware & {
+    signature: `0x${string}`;
+};
 export declare function sendUserOperation<TTransport extends Transport = Transport, TChain extends Chain | undefined = Chain | undefined, TAccount extends SmartAccount | undefined = SmartAccount | undefined>(client: Client<TTransport, TChain, TAccount>, args: Prettify<SendUserOperationParameters<TAccount>>): Promise<Hash>;
+export declare function getUserOperationWithoutSignature<TTransport extends Transport = Transport, TChain extends Chain | undefined = Chain | undefined, TAccount extends SmartAccount | undefined = SmartAccount | undefined>(client: Client<TTransport, TChain, TAccount>, args: Prettify<SendUserOperationParameters<TAccount>>): Promise<UserOperation>;
 //# sourceMappingURL=sendUserOperation.d.ts.map

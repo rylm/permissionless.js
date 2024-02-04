@@ -37,7 +37,7 @@ export async function deployContract(client, args) {
     const { account: account_ = client.account } = request;
     if (!account_) {
         throw new AccountOrClientNotFoundError({
-            docsPath: "/docs/actions/wallet/sendTransaction"
+            docsPath: "/docs/actions/wallet/sendTransaction",
         });
     }
     const account = parseAccount(account_);
@@ -50,14 +50,15 @@ export async function deployContract(client, args) {
             callData: await account.encodeDeployCallData({
                 abi,
                 bytecode,
-                args: constructorArgs
-            })
+                args: constructorArgs,
+            }),
         },
+        signature: "0x",
         account: account,
-        sponsorUserOperation
+        sponsorUserOperation,
     });
     const userOperationReceipt = await getAction(client, waitForUserOperationReceipt)({
-        hash: userOpHash
+        hash: userOpHash,
     });
     return userOperationReceipt?.receipt.transactionHash;
 }

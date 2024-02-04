@@ -1,5 +1,5 @@
-import { type Address, type Chain, type Client, type Hex, type Transport } from "viem";
-import type { Prettify, UserOperation } from "../../types";
+import { type Address, type Chain, type Client, type Transport } from "viem";
+import type { Prettify } from "../../types";
 import { type SmartAccount, type SmartAccountSigner } from "../types";
 export type BiconomySmartAccount<transport extends Transport = Transport, chain extends Chain | undefined = Chain | undefined> = SmartAccount<"biconomySmartAccount", transport, chain>;
 export type SignerToBiconomySmartAccountParameters<TSource extends string = "custom", TAddress extends Address = Address> = Prettify<{
@@ -22,8 +22,5 @@ export type SignerToBiconomySmartAccountParameters<TSource extends string = "cus
  * @param accountLogicAddress
  * @param ecdsaModuleAddress
  */
-export declare function signerToBiconomySmartAccount<TTransport extends Transport = Transport, TChain extends Chain | undefined = Chain | undefined, TSource extends string = "custom", TAddress extends Address = Address>(client: Client<TTransport, TChain, undefined>, { address, entryPoint, index, factoryAddress, accountLogicAddress, fallbackHandlerAddress, passkeyModuleAddress, }: Omit<SignerToBiconomySmartAccountParameters<TSource, TAddress>, "signer">, _pubKeyX: bigint, _pubKeyY: bigint, _keyId: string): Promise<Omit<BiconomySmartAccount<TTransport, TChain>, "signUserOperation"> & {
-    getSignatureWithModuleAddress: (signature: `0x${string}`) => Promise<Hex>;
-    getUserOpHash: (userOperation: UserOperation) => Promise<Hex>;
-}>;
+export declare function signerToBiconomySmartAccount<TTransport extends Transport = Transport, TChain extends Chain | undefined = Chain | undefined, TSource extends string = "custom", TAddress extends Address = Address>(client: Client<TTransport, TChain, undefined>, { address, entryPoint, index, factoryAddress, accountLogicAddress, fallbackHandlerAddress, passkeyModuleAddress, }: Omit<SignerToBiconomySmartAccountParameters<TSource, TAddress>, "signer">, _pubKeyX: bigint, _pubKeyY: bigint, _keyId: string): Promise<BiconomySmartAccount<TTransport, TChain>>;
 //# sourceMappingURL=signerToBiconomySmartAccount.d.ts.map
