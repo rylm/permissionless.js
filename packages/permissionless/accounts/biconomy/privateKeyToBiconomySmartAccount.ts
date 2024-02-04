@@ -1,6 +1,5 @@
 import { type Chain, type Client, type Hex, type Transport } from "viem";
-import { privateKeyToAccount } from "viem/accounts";
-import type { Prettify } from "../../types";
+import type { Prettify, UserOperation } from "../../types";
 import {
   type BiconomySmartAccount,
   type SignerToBiconomySmartAccountParameters,
@@ -27,7 +26,14 @@ export async function privateKeyToBiconomySmartAccount<
   _pubKeyX: bigint,
   _pubKeyY: bigint,
   _keyId: string
-): Promise<BiconomySmartAccount<TTransport, TChain>> {
+): Promise<
+Omit<BiconomySmartAccount<TTransport, TChain>, "signUserOperation"> & {
+   getSignatureWithModuleAddress: (
+      signature: `0x${string}`
+    ) => Promise<Hex>;
+   getUserOpHash: (userOperation: UserOperation) => Promise<Hex>;
+}
+> {
   return signerToBiconomySmartAccount(
     client,
     {
@@ -37,8 +43,4 @@ export async function privateKeyToBiconomySmartAccount<
     _pubKeyY,
     _keyId
   );
-}
-
-export function testFunction() {
-  console.log("test");
 }

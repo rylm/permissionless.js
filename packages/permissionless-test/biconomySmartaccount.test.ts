@@ -75,25 +75,7 @@ describe("Biconomy Modular Smart Account (ECDSA module)", () => {
             account: await getSignerToBiconomyAccount()
         })
 
-        const response = await smartAccountClient.signTypedData({
-            domain: {
-                chainId: 1,
-                name: "Test",
-                verifyingContract: zeroAddress
-            },
-            primaryType: "Test",
-            types: {
-                Test: [
-                    {
-                        name: "test",
-                        type: "string"
-                    }
-                ]
-            },
-            message: {
-                test: "hello world"
-            }
-        })
+        const response = await smartAccountClient.signTypedData()
 
         expectTypeOf(response).toBeString()
         expect(response).toHaveLength(132)

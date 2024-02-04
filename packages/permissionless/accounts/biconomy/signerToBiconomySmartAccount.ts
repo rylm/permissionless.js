@@ -4,8 +4,8 @@ import {
   type Chain,
   type Client,
   type Hex,
-  type LocalAccount,
   type Transport,
+  // @ts-ignore
   type TypedDataDefinition,
   concatHex,
   encodeAbiParameters,
@@ -17,9 +17,9 @@ import {
   parseAbiParameters,
 } from "viem";
 import { toAccount } from "viem/accounts";
-import { getChainId, signMessage, signTypedData } from "viem/actions";
+import { getChainId } from "viem/actions";
 import { getAccountNonce } from "../../actions/public/getAccountNonce";
-import type { Prettify } from "../../types";
+import type { Prettify, UserOperation } from "../../types";
 import { getUserOperationHash } from "../../utils/getUserOperationHash";
 import { isSmartAccountDeployed } from "../../utils/isSmartAccountDeployed";
 import {
@@ -231,10 +231,10 @@ export async function signerToBiconomySmartAccount<
   _keyId: string
 ): Promise<
   Omit<BiconomySmartAccount<TTransport, TChain>, "signUserOperation"> & {
-    encodeSignedUserOperation: (
-      userOperation: any,
+    getSignatureWithModuleAddress: (
       signature: `0x${string}`
     ) => Promise<Hex>;
+    getUserOpHash: (userOperation: UserOperation) => Promise<Hex>;
   }
 > {
   // Helper to generate the init code for the smart account
@@ -278,7 +278,7 @@ export async function signerToBiconomySmartAccount<
   // Build the EOA Signer
   const account = toAccount({
     address: accountAddress,
-    async signMessage({ message }) {
+    async signMessage({ }) {
       throw new Error("Not implemented");
     },
     async signTransaction(_, __) {
@@ -286,7 +286,9 @@ export async function signerToBiconomySmartAccount<
     },
     async signTypedData<
       const TTypedData extends TypedData | Record<string, unknown>,
+      // @ts-ignore
       TPrimaryType extends keyof TTypedData | "EIP712Domain" = keyof TTypedData
+      // @ts-ignore
     >(typedData: TypedDataDefinition<TTypedData, TPrimaryType>) {
       throw new Error("Not implemented");
     },
@@ -307,9 +309,8 @@ export async function signerToBiconomySmartAccount<
       });
     },
 
-    // Sign a user operation
-    async encodeSignedUserOperation(userOperation, signature: `0x${string}`) {
-      const hash = getUserOperationHash({
+    async getUserOpHash(userOperation: UserOperation) {
+      return getUserOperationHash({
         userOperation: {
           ...userOperation,
           signature: "0x",
@@ -317,6 +318,10 @@ export async function signerToBiconomySmartAccount<
         entryPoint: entryPoint,
         chainId: chainId,
       });
+    },
+
+    // Sign a user operation
+    async getSignatureWithModuleAddress(signature: `0x${string}`) {
       // const signature = await signMessage(client, {
       //   account: viemSigner,
       //   message: { raw: hash },

@@ -386,25 +386,7 @@ describe("Safe Account", () => {
             account: await getSignerToSafeSmartAccount()
         })
 
-        const signature = await smartAccountClient.signTypedData({
-            domain: {
-                chainId: 1,
-                name: "Test",
-                verifyingContract: zeroAddress
-            },
-            primaryType: "Test",
-            types: {
-                Test: [
-                    {
-                        name: "test",
-                        type: "string"
-                    }
-                ]
-            },
-            message: {
-                test: "hello world"
-            }
-        })
+        const signature = await smartAccountClient.signTypedData()
 
         expectTypeOf(signature).toBeString()
         expect(signature).toHaveLength(132)
